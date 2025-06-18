@@ -12,10 +12,10 @@
 #include "../models/AlmgrenChriss.h"
 #include "../models/RegressionModels.h"
 #include "../models/FeeModel.h"
-#include "TransformerModel.h"
+#include "AdvancedTransformerModel.h"
 
 /**
- * @brief Main simulator class coordinating all components
+ * @brief Main simulator class coordinating all components with GPU-accelerated AI
  */
 class TradeSimulator {
 public:
@@ -67,6 +67,19 @@ public:
                       double volatility, int feeTier);
     
     /**
+     * @brief Load pre-trained AI model
+     * @param model_path Path to PyTorch (.pt) or ONNX (.onnx) model file
+     * @return true if model loaded successfully
+     */
+    bool loadAIModel(const std::string& model_path);
+    
+    /**
+     * @brief Get AI model performance metrics
+     * @return Model performance metrics including GPU usage
+     */
+    AdvancedTransformerModel::ModelMetrics getAIModelMetrics() const;
+    
+    /**
      * @brief Get the estimated slippage
      * @return Estimated slippage
      */
@@ -91,16 +104,34 @@ public:
     double getNetCost() const;
     
     /**
-     * @brief Get the maker/taker proportion
-     * @return Maker/taker proportion
+     * @brief Get the maker/taker proportion from AI model
+     * @return Maker/taker proportion with confidence intervals
      */
     double getMakerTakerProportion() const;
+    
+    /**
+     * @brief Get AI prediction confidence bounds
+     * @return Lower and upper confidence bounds
+     */
+    std::pair<double, double> getMakerTakerConfidence() const;
     
     /**
      * @brief Get the internal latency
      * @return Internal latency in microseconds
      */
     int64_t getInternalLatency() const;
+    
+    /**
+     * @brief Get AI model inference time
+     * @return AI inference time in milliseconds
+     */
+    double getAIInferenceTime() const;
+    
+    /**
+     * @brief Get current GPU memory usage
+     * @return GPU memory usage in MB
+     */
+    double getGpuMemoryUsage() const;
     
     /**
      * @brief Get the current price
@@ -161,7 +192,7 @@ public:
      * @return Fee tier
      */
     int getFeeTier() const;
-    
+
 private:
     std::string exchange_;
     std::string symbol_;
@@ -174,7 +205,7 @@ private:
     std::unique_ptr<WebSocketClient> websocket_client_;
     std::unique_ptr<AlmgrenChriss> almgren_chriss_model_;
     std::unique_ptr<LinearRegression> slippage_model_;
-    std::unique_ptr<TransformerModel> maker_taker_model_;
+    std::unique_ptr<AdvancedTransformerModel> advanced_ai_model_;
     std::unique_ptr<FeeModel> fee_model_;
     
     mutable std::mutex data_mutex_;
@@ -184,7 +215,10 @@ private:
     double expected_fees_;
     double expected_market_impact_;
     double maker_taker_proportion_;
+    double confidence_lower_;
+    double confidence_upper_;
     int64_t internal_latency_;
+    double ai_inference_time_;
     
     /**
      * @brief Process received WebSocket message

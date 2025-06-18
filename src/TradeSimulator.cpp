@@ -17,7 +17,10 @@ TradeSimulator::TradeSimulator()
       expected_fees_(0.0),
       expected_market_impact_(0.0),
       maker_taker_proportion_(0.1),
-      internal_latency_(0)
+      confidence_lower_(0.0),
+      confidence_upper_(1.0),
+      internal_latency_(0),
+      ai_inference_time_(0.0)
 {
     // std::cout << "TradeSimulator: Initialized with symbol " << symbol_ << " and volatility " << volatility_ << std::endl;
 }
@@ -33,7 +36,6 @@ bool TradeSimulator::initialize(const std::string& websocketUrl) {
         websocket_client_ = std::make_unique<WebSocketClient>(websocketUrl);
         
         // Initialize Almgren-Chriss model with default parameters
-        // These can be tuned based on market conditions
         double temporary_impact_factor = 0.1;
         double permanent_impact_factor = 0.1;
         double risk_aversion = 1.0;
@@ -43,14 +45,25 @@ bool TradeSimulator::initialize(const std::string& websocketUrl) {
         // Initialize regression models
         slippage_model_ = std::make_unique<LinearRegression>();
         
-        // Initialize transformer model for maker/taker prediction
-        // with Bitcoin-specific parameters
-        maker_taker_model_ = std::make_unique<TransformerModel>(
-            8,    // input dimensions (market features)
-            64,   // hidden dimensions (larger for BTC complexity)
-            8,    // attention heads
-            48    // sequence length (longer history for BTC volatility patterns)
+        // Initialize advanced GPU-accelerated transformer model
+        advanced_ai_model_ = std::make_unique<AdvancedTransformerModel>(
+            AdvancedTransformerModel::ModelType::TEMPORAL_FUSION_TRANSFORMER,
+            AdvancedTransformerModel::ModelBackend::CUDA_NATIVE,
+            16,   // input dimensions (enhanced features)
+            256,  // hidden dimensions (larger for better performance)
+            16,   // attention heads
+            12,   // transformer layers
+            128,  // sequence length
+            true  // use GPU acceleration
         );
+        
+        // Initialize the AI model
+        if (!advanced_ai_model_->initialize()) {
+            std::cerr << "Warning: Advanced AI model initialization failed, using fallback" << std::endl;
+        } else {
+            std::cout << "Advanced GPU-accelerated AI model initialized successfully" << std::endl;
+            std::cout << advanced_ai_model_->getModelInfo() << std::endl;
+        }
         
         // Initialize fee model
         fee_model_ = std::make_unique<FeeModel>(exchange_);
@@ -161,7 +174,7 @@ void TradeSimulator::processMessage(const nlohmann::json& message) {
 }
 
 void TradeSimulator::calculateOutputParameters() {
-    if (!orderbook_ || !almgren_chriss_model_ || !slippage_model_ || !maker_taker_model_ || !fee_model_) {
+    if (!orderbook_ || !almgren_chriss_model_ || !slippage_model_ || !advanced_ai_model_ || !fee_model_) {
         std::cerr << "TradeSimulator: Missing required components for calculation" << std::endl;
         return;
     }
@@ -221,16 +234,31 @@ void TradeSimulator::calculateOutputParameters() {
         usd_quantity / total_depth  // normalized quantity
     };
     
-    // Use transformer model to predict maker/taker proportion
+    // Use advanced AI model to predict maker/taker proportion with confidence intervals
     double calculated_maker_taker = 0.3; // Default value
-    if (maker_taker_model_) {
+    if (advanced_ai_model_) {
         try {
-            calculated_maker_taker = maker_taker_model_->predictMakerProbability(market_features, order_type);
+            auto start_time = std::chrono::high_resolution_clock::now();
+            
+            auto prediction_result = advanced_ai_model_->predictMakerProbability(market_features, order_type, 0.95);
+            calculated_maker_taker = prediction_result.maker_probability;
+            confidence_lower_ = prediction_result.confidence_lower;
+            confidence_upper_ = prediction_result.confidence_upper;
+            
+            auto end_time = std::chrono::high_resolution_clock::now();
+            ai_inference_time_ = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+            
         } catch (const std::exception& e) {
-            std::cerr << "Error in maker/taker prediction: " << e.what() << std::endl;
+            std::cerr << "Error in AI maker/taker prediction: " << e.what() << std::endl;
+            confidence_lower_ = 0.0;
+            confidence_upper_ = 1.0;
+            ai_inference_time_ = 0.0;
         }
     } else {
-        std::cerr << "Warning: maker_taker_model is null" << std::endl;
+        std::cerr << "Warning: advanced_ai_model is null" << std::endl;
+        confidence_lower_ = 0.0;
+        confidence_upper_ = 1.0;
+        ai_inference_time_ = 0.0;
     }
     
     // Calculate expected fees based on maker/taker proportion
@@ -280,9 +308,59 @@ double TradeSimulator::getNetCost() const {
     return expected_slippage_ + expected_fees_ + expected_market_impact_;
 }
 
+bool TradeSimulator::loadAIModel(const std::string& model_path) {
+    if (!advanced_ai_model_) {
+        std::cerr << "Advanced AI model not initialized" << std::endl;
+        return false;
+    }
+    
+    bool success = advanced_ai_model_->loadModel(model_path);
+    if (success) {
+        std::cout << "Successfully loaded AI model: " << model_path << std::endl;
+    } else {
+        std::cerr << "Failed to load AI model: " << model_path << std::endl;
+    }
+    
+    return success;
+}
+
+AdvancedTransformerModel::ModelMetrics TradeSimulator::getAIModelMetrics() const {
+    if (advanced_ai_model_) {
+        return advanced_ai_model_->getModelMetrics();
+    }
+    
+    // Return default metrics if model not available
+    AdvancedTransformerModel::ModelMetrics default_metrics;
+    default_metrics.accuracy = 0.0;
+    default_metrics.precision = 0.0;
+    default_metrics.recall = 0.0;
+    default_metrics.f1_score = 0.0;
+    default_metrics.avg_inference_time_ms = 0.0;
+    default_metrics.gpu_memory_usage_mb = 0.0;
+    
+    return default_metrics;
+}
+
 double TradeSimulator::getMakerTakerProportion() const {
     std::lock_guard<std::mutex> lock(data_mutex_);
     return maker_taker_proportion_;
+}
+
+std::pair<double, double> TradeSimulator::getMakerTakerConfidence() const {
+    std::lock_guard<std::mutex> lock(data_mutex_);
+    return {confidence_lower_, confidence_upper_};
+}
+
+double TradeSimulator::getAIInferenceTime() const {
+    std::lock_guard<std::mutex> lock(data_mutex_);
+    return ai_inference_time_;
+}
+
+double TradeSimulator::getGpuMemoryUsage() const {
+    if (advanced_ai_model_) {
+        return advanced_ai_model_->getModelMetrics().gpu_memory_usage_mb;
+    }
+    return 0.0;
 }
 
 int64_t TradeSimulator::getInternalLatency() const {

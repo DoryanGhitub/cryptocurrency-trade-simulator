@@ -1,11 +1,22 @@
 [requires]
-nlohmann_json/3.10.5
-openssl/3.3.2
-boost/1.78.0
+nlohmann_json/3.11.2
+openssl/1.1.1t
+boost/1.82.0
+eigen/3.4.0
+# PyTorch C++ (LibTorch)
+# ONNX Runtime C++
+# CUDA Toolkit (system dependency)
 
 [generators]
 CMakeDeps
 CMakeToolchain
 
 [options]
-boost/*:shared=True 
+boost:shared=False
+openssl:shared=False
+# Add CUDA-specific options
+eigen:with_openmp=True
+
+[imports]
+bin, *.dll -> ./bin # Copies all dll files from packages bin folder to my "bin" folder
+lib, *.dylib* -> ./bin # Copies all dylib files from packages lib folder to my "bin" folder 
