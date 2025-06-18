@@ -1,0 +1,11 @@
+[requires]
+nlohmann_json/3.10.5
+openssl/3.3.2
+boost/1.78.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[options]
+boost/*:shared=True 

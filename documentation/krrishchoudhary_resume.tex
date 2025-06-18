@@ -1,0 +1,154 @@
+% Krrish Choudhary's Resume in LaTeX
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[margin=0.5in]{geometry} % Page margins
+\usepackage{titlesec} % Custom section titles
+\usepackage{enumitem} % For customizing lists
+\usepackage{hyperref} % For hyperlinks
+\usepackage{xcolor} % For colors
+\usepackage{multicol} % For multiple columns
+\usepackage{ragged2e} % For better text alignment
+\usepackage{tabularx} % For tables
+\usepackage{setspace} % For line spacing
+\usepackage[utf8]{inputenc} % Input encoding
+\usepackage[T1]{fontenc} % Font encoding
+\usepackage{lmodern} % Latin Modern font
+
+% Colors
+\definecolor{primary}{RGB}{70,130,180} % Steel blue
+\definecolor{darkgray}{RGB}{50,50,50}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    urlcolor=primary,
+    pdftitle={Krrish Choudhary Resume},
+    pdfauthor={Krrish Choudhary},
+    pdfsubject={Resume},
+    pdfcreator={LaTeX}
+}
+
+% Title format
+\titleformat{\section}
+{\Large\bfseries\color{primary}}
+{}{0em}{}[\titlerule]
+
+\titlespacing*{\section}{0pt}{10pt}{8pt}
+
+% Custom commands
+\newcommand{\entrytitle}[1]{\textbf{#1}}
+\newcommand{\entryposition}[1]{\textit{#1}}
+\newcommand{\entrylocation}[1]{\textit{#1}}
+\newcommand{\entrydate}[1]{\textit{#1}}
+\newcommand{\entryinfo}[4]{
+    \begin{tabularx}{\textwidth}{@{} X r @{}}
+        \entrytitle{#1}, \entryposition{#2} & \entrydate{#4} \\
+        \entrylocation{#3} & \\
+    \end{tabularx}
+}
+
+% Document start
+\begin{document}
+\pagenumbering{gobble} % No page numbers
+
+% Header
+\begin{center}
+    {\Huge\textbf{Krrish Choudhary}}\\[5pt]
+    {\small Jaipur, Rajasthan | Email: krrishchoudhary109@gmail.com | Phone: +91 7877624097 | CodeForces}\\
+    {\small LinkedIn: Krrish Choudhary}\\
+\end{center}
+
+% Skills and Interests
+\section{Skills and Interests}
+
+\subsection*{Technical Skills}
+Technical Analysis and Foreign Exchange (FX) Trading form the cornerstone of my expertise as a Proprietary Trader at FundedNext and as a Back-End Engineer Intern at GoQuant Technologies. With a deep understanding of market patterns and strategic execution, I excel in leveraging data for informed decision-making. My background is fortified by a robust foundation in Database Management System (DBMS), ensuring efficient data handling and analysis. I specialize in high-performance backend systems for financial applications, with expertise in multi-threaded processing, memory optimization, and real-time data systems.
+
+\subsection*{Programming and Tools}
+My programming skills encompass modern languages and frameworks, including C++17, Python 3.8+, Java, and JavaScript/TypeScript. I implement Object-Oriented Programming (OOP) principles across different technology stacks and cloud environments. I have substantial experience with Machine Learning and Quantum Computing, specifically developing Convolutional Neural Networks (CNN) and implementing BB84 quantum protocols using Qiskit. I utilize libraries such as TensorFlow, PyTorch, NumPy, and Pandas for sophisticated data modeling and analysis. For systems development, I'm proficient with Boost, libuv, React, and Node.js ecosystems for building scalable applications. My security expertise includes AES-256 encryption, cryptographic hashing, and secure communications protocols. In terms of tools and technologies, I am skilled with Docker for containerization, Git for version control, Redis for distributed caching, SQLite for data persistence, and Bash/CMake for build automation. My background in Data Structures and Algorithms, developed through competitive programming, enhances my problem-solving capabilities across financial technology domains.
+
+% Education
+\section{Education}
+
+\entryinfo{The LNM Institute of Information Technology}{B.Tech}{Jaipur}{2023 -- 2027}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Ongoing 2nd Year Undergraduate: 7.21 CGPA
+\end{itemize}
+
+\entryinfo{Eden International}{12th}{Bhilwara}{2022}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 79.6\%
+\end{itemize}
+
+\entryinfo{Central Academy}{10th}{Bhilwara}{2020}
+\begin{itemize}[leftmargin=*, nosep]
+    \item 82\%
+\end{itemize}
+
+% Experience
+\section{Experience}
+
+\entryinfo{Back-End Engineer Intern}{GoQuant Technologies Inc.}{Miami, FL}{February to March 2025}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Developed integration tests for Order Execution and Management System using C++ and Python, ensuring robust system stability and performance.
+    \item Implemented GoMarket gateways in C++, facilitating reliable connectivity to multiple trading venues and market data providers.
+\end{itemize}
+
+\entryinfo{Proprietary Trader}{FundedNext}{Remote}{June 2024 -- Present}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Conducted technical analysis and executed foreign exchange trades, contributing to a profitable trading strategy.
+    \item Utilized data-driven approaches to predict market trends and optimize trading performance.
+    \item Collaborated with senior traders to develop and refine trading Strategies.
+\end{itemize}
+
+\entryinfo{B.Tech Student}{The LNM Institute of Information Technology}{Jaipur, India}{2023 -- Present}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Assisted in LUSIP projects focused on deep learning applications.
+    \item Developed and tested models using libraries such as TensorFlow and PyTorch.
+    \item Contributed to the preparation of research papers and presentations.
+\end{itemize}
+
+\entryinfo{Competitive Coding Enthusiast}{}{}{Ongoing}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Actively participated in numerous coding competitions on platforms such as Codeforces.
+    \item Participated in coding challenges, enhancing problem-solving skills and algorithmic thinking.
+    \item Developed a strong foundation in data structures and algorithms, applying these concepts to solve complex coding problems.
+    \item Collaborated with peers to prepare for team-based competitions and hackathons, fostering teamwork and communication skills.
+\end{itemize}
+
+% Projects
+\section{Projects}
+
+\entrytitle{Quantum Key Distribution (QKD) for Razorpay Integration} \hfill \texttt{github.com/Krrish2004/qkd-razorpay-demo}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Implemented the BB84 Quantum Key Distribution protocol with 1024-qubit quantum circuit simulation using Qiskit's Aer backend to secure payment transactions through quantum cryptography.
+    \item Engineered a key distillation protocol with entropy amplification achieving 99.2\% key agreement rate despite 5\% channel noise.
+    \item Created an AI-powered fraud detection module using an ensemble model (Random Forest + Neural Network) achieving 94\% accuracy on transaction classification.
+    \item Implemented AES-256 encryption with quantum-derived keys and HMAC-SHA256 for message authentication, ensuring end-to-end transaction security.
+    \item Technologies Used: Python 3.8+, Qiskit 0.39.0, Flask 2.0.1, TensorFlow 2.9.0, NumPy, Pandas, Redis, JavaScript/jQuery, WebSockets
+\end{itemize}
+
+\entrytitle{Ubuntu Time Machine: Professional-Grade Backup Solution} \hfill \texttt{github.com/Krrish2004/ubuntu-time-machine}
+\begin{itemize}[leftmargin=*, nosep]
+    \item Architected a high-performance backup system with C++17 utilizing memory-mapped I/O and multi-threaded block-level deduplication achieving 60\% storage savings.
+    \item Implemented incremental backup algorithm with B-tree based file checksumming (SHA-256) and binary diffing for efficient delta storage.
+    \item Developed a custom filesystem abstraction layer with copy-on-write snapshots supporting 4KB-4MB block sizes and hard-link based history traversal.
+    \item Technologies Used: C++17, Boost 1.74+, SQLite 3.35+, CMake 3.19+, libuv, Electron 19.0, React 18.0, Node.js 16+
+\end{itemize}
+
+% Technologies
+\section{Technologies}
+
+\textbf{Languages:} C++17, C, Java, Python 3.8+, JavaScript, TypeScript, SQL
+
+\textbf{Technologies \& Tools:} Docker, Linux, Git, Bash, CMake, Redis, SQLite, inotify, WebSockets, OAuth 2.0
+
+\textbf{Frameworks \& Libraries:} React, Node.js, Electron, Flask, TensorFlow, PyTorch, Qiskit, Boost, NumPy, Pandas, D3.js, Material UI, jQuery, libuv
+
+\textbf{Security \& Performance:} AES-256-GCM encryption, HMAC-SHA256, ZSTD compression, SHA-256 checksumming, Memory-mapped I/O, Multi-threading
+
+\textbf{ML/AI:} Convolutional Neural Networks (CNN), Random Forest, Ensemble Models, Quantum Computing, Deep Learning, Computer Vision, Feature Extraction, Model Optimization
+
+\end{document} 

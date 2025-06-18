@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.exe
+*.out
+trade_simulator
+volatility_test
+
+# Documentation PDF files
+documentation/*.pdf
+
+# Large PDF files
+*.pdf
+
+# Data directory (mounted as volume)
+data/
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Other
+.DS_Store 
