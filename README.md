@@ -1,311 +1,103 @@
-# 🚀 Advanced GPU-Accelerated Cryptocurrency Trading Cost Simulator
+# Cryptocurrency Trade Simulator 🚀
 
-> **High-performance C++ trading simulator with GPU-accelerated AI models for real-time cryptocurrency transaction cost estimation**
+![GitHub release](https://img.shields.io/github/release/DoryanGhitub/cryptocurrency-trade-simulator.svg)
+![GitHub issues](https://img.shields.io/github/issues/DoryanGhitub/cryptocurrency-trade-simulator.svg)
+![GitHub forks](https://img.shields.io/github/forks/DoryanGhitub/cryptocurrency-trade-simulator.svg)
+![GitHub stars](https://img.shields.io/github/stars/DoryanGhitub/cryptocurrency-trade-simulator.svg)
 
-[![C++](https://img.shields.io/badge/C++-20-blue.svg)](https://en.cppreference.com/w/cpp/20)
-[![CUDA](https://img.shields.io/badge/CUDA-12.0+-green.svg)](https://developer.nvidia.com/cuda-toolkit)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+Welcome to the **Cryptocurrency Trade Simulator**! This high-performance C++ simulator allows you to explore the complexities of cryptocurrency trading. With its Transformer-based AI, you can predict maker/taker behavior, analyze market impact, and optimize execution using the Almgren-Chriss model.
 
-## 🎯 Overview
+## Table of Contents
 
-This is a **state-of-the-art cryptocurrency trading cost simulator** that leverages **GPU acceleration** and **advanced transformer models** to provide real-time, highly accurate predictions of:
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Topics](#topics)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-- 📊 **Maker/Taker Execution Probability** with confidence intervals
-- 💰 **Transaction Costs** (slippage, fees, market impact)
-- ⚡ **Market Impact Analysis** using Almgren-Chriss models
-- 🧠 **AI-Powered Predictions** using Temporal Fusion Transformers
-- 📈 **Real-time Market Microstructure Analysis**
+## Features
 
-## 🔥 Key Features
+- **Real-time Predictions**: Utilize advanced Transformer-based AI to predict market behaviors effectively.
+- **Market Impact Analysis**: Understand how your trades affect market prices and liquidity.
+- **Optimal Execution**: Leverage the Almgren-Chriss model to find the best execution strategies.
+- **High Performance**: Built with C++ for speed and efficiency, making it suitable for real-time applications.
+- **Docker Support**: Easily deploy the simulator in various environments using Docker.
+- **WebSocket Integration**: Connect to real-time data feeds for live market simulation.
 
-### **🚀 GPU Acceleration**
-- **CUDA-optimized transformer kernels** for lightning-fast inference
-- **Multi-GPU support** for parallel model execution
-- **Memory-efficient GPU operations** with automatic memory management
-- **Real-time inference** with <5ms latency on modern GPUs
+## Installation
 
-### **🧠 Advanced AI Models**
-- **Temporal Fusion Transformer (TFT)** for time series prediction
-- **PyTorch C++ integration** for production-ready model deployment
-- **ONNX Runtime support** for cross-platform model compatibility
-- **Uncertainty quantification** with Monte Carlo dropout
-- **Advanced feature engineering** with 40+ technical indicators
+To get started, clone the repository and build the project using CMake:
 
-### **📊 Sophisticated Financial Modeling**
-- **Almgren-Chriss optimal execution** models
-- **Market microstructure analysis** (order flow, depth, impact)
-- **Multi-scale attention mechanisms** for different time horizons
-- **Regime-aware predictions** (bull/bear/sideways markets)
-- **Real-time volatility estimation** and risk assessment
-
-### **⚡ High-Performance Architecture**
-- **Lock-free data structures** for minimal latency
-- **WebSocket streaming** for real-time market data
-- **Memory-mapped file I/O** for ultra-fast data access
-- **SIMD optimizations** for mathematical computations
-- **Asynchronous processing** with thread pools
-
-## 🛠️ Technical Architecture
-
-```mermaid
-graph TB
-    A[Real-time Market Data] --> B[WebSocket Client]
-    B --> C[Order Book Manager]
-    C --> D[Feature Engineering]
-    D --> E[GPU-Accelerated AI Model]
-    E --> F[Prediction Engine]
-    F --> G[Risk Assessment]
-    G --> H[Cost Estimation]
-    
-    subgraph "GPU Processing"
-        E --> I[CUDA Kernels]
-        I --> J[Attention Mechanism]
-        J --> K[Layer Normalization]
-        K --> L[Feed Forward]
-    end
-    
-    subgraph "AI Models"
-        M[PyTorch JIT]
-        N[ONNX Runtime]
-        O[Custom CUDA]
-    end
-    
-    E --> M
-    E --> N
-    E --> O
-```
-
-## 🔧 Installation & Setup
-
-### **Prerequisites**
-- **C++20** compatible compiler (GCC 10+, Clang 12+)
-- **CUDA Toolkit 11.8+** (for GPU acceleration)
-- **CMake 3.16+**
-- **Conan 1.59+**
-
-### **1. Clone Repository**
 ```bash
-git clone https://github.com/Krrish2004/cryptocurrency-trade-simulator.git
+git clone https://github.com/DoryanGhitub/cryptocurrency-trade-simulator.git
 cd cryptocurrency-trade-simulator
+mkdir build
+cd build
+cmake ..
+make
 ```
 
-### **2. Setup GPU Dependencies**
+For detailed installation instructions, please refer to the [Releases](https://github.com/DoryanGhitub/cryptocurrency-trade-simulator/releases) section.
+
+## Usage
+
+After building the project, you can run the simulator with the following command:
+
 ```bash
-# Install PyTorch C++, ONNX Runtime, and CUDA dependencies
-./setup_gpu_dependencies.sh
-
-# Load environment variables
-source setup_env.sh
+./cryptocurrency_trade_simulator
 ```
 
-### **3. Install C++ Dependencies**
+You can configure the simulator using command-line options. For example, to set the trading parameters, use:
+
 ```bash
-# Install Conan dependencies
-conan install . --output-folder=build --build=missing
-
-# Configure CMake with GPU support
-cmake --preset conan-default
+./cryptocurrency_trade_simulator --config config.json
 ```
 
-### **4. Build with GPU Acceleration**
-```bash
-# Build the project
-cmake --build --preset conan-release
+Refer to the documentation in the `docs` folder for more information on configuration options and advanced usage.
 
-# Or use the build script
-./build.sh
-```
+## Topics
 
-## 🚀 Quick Start
+This repository covers various important topics in the field of cryptocurrency trading and algorithmic trading, including:
 
-### **Basic Usage**
-```cpp
-#include "TradeSimulator.h"
+- **Algorithmic Trading**: Strategies for automated trading in financial markets.
+- **Bitcoin**: Insights and simulations focused on Bitcoin trading.
+- **CMake**: Build system used for managing project builds.
+- **C++**: The programming language used for high-performance execution.
+- **Cryptocurrency**: General information and resources about digital currencies.
+- **Docker**: Containerization technology for easy deployment.
+- **Machine Learning**: Techniques applied for predictive modeling.
+- **Quantitative Finance**: Mathematical models and computational techniques for financial analysis.
+- **Trading**: The act of buying and selling financial instruments.
+- **Transformer**: AI architecture used for prediction tasks.
+- **WebSockets**: Protocol for real-time communication with data sources.
 
-int main() {
-    // Initialize GPU-accelerated simulator
-    TradeSimulator simulator;
-    
-    // Load pre-trained AI model
-    simulator.loadAIModel("models/btc_tft_model.pt");
-    
-    // Configure for Bitcoin perpetual futures
-    simulator.setParameters("OKX", "BTC-USDT-SWAP", "market", 10000.0, 0.02, 1);
-    
-    // Connect to real-time data
-    simulator.initialize("wss://ws.okx.com:8443/ws/v5/public");
-    simulator.connect();
-    
-    // Get AI-powered predictions with confidence intervals
-    auto prediction = simulator.getMakerTakerProportion();
-    auto confidence = simulator.getMakerTakerConfidence();
-    
-    std::cout << "Maker Probability: " << prediction << std::endl;
-    std::cout << "Confidence Interval: [" << confidence.first 
-              << ", " << confidence.second << "]" << std::endl;
-    
-    return 0;
-}
-```
+## Contributing
 
-### **Advanced AI Model Configuration**
-```cpp
-// Initialize with custom transformer architecture
-AdvancedTransformerModel model(
-    AdvancedTransformerModel::ModelType::TEMPORAL_FUSION_TRANSFORMER,
-    AdvancedTransformerModel::ModelBackend::PYTORCH,
-    32,   // input dimensions
-    512,  // hidden dimensions  
-    16,   // attention heads
-    12,   // transformer layers
-    256,  // sequence length
-    true  // enable GPU acceleration
-);
+We welcome contributions from the community! If you would like to contribute, please follow these steps:
 
-// Load production model
-model.loadModel("models/production_tft.onnx");
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your fork.
+5. Open a pull request with a description of your changes.
 
-// Get multi-output predictions
-auto multi_pred = model.predictMultipleOutputs(features, "limit");
-std::cout << "Predicted Volatility: " << multi_pred.predicted_volatility << std::endl;
-std::cout << "Market Impact: " << multi_pred.market_impact_factor << std::endl;
-```
+Please ensure your code adheres to the project's coding standards and includes appropriate tests.
 
-## 📊 Performance Benchmarks
+## License
 
-### **GPU Acceleration Impact**
-| Model | CPU (Intel i9-12900K) | GPU (RTX 4090) | Speedup |
-|-------|----------------------|----------------|---------|
-| TFT-256 | 45.2ms | **2.1ms** | **21.5x** |
-| BERT-Financial | 78.9ms | **3.7ms** | **21.3x** |
-| Vision Transformer | 62.4ms | **2.9ms** | **21.5x** |
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### **Memory Usage**
-- **GPU Memory**: 2.1GB (for TFT-512 model)
-- **System RAM**: 1.2GB
-- **Model Size**: 180MB (compressed)
+## Contact
 
-### **Real-time Performance**
-- **Inference Latency**: <5ms on RTX 4090
-- **Throughput**: 2000+ predictions/second
-- **WebSocket Latency**: <10ms
-- **End-to-end Latency**: <20ms
+For questions or suggestions, please reach out to the project maintainer:
 
-## 🧠 AI Model Features
+- **Doryan Ghitub**
+- [GitHub Profile](https://github.com/DoryanGhitub)
 
-### **Temporal Fusion Transformer (TFT)**
-- **Multi-horizon forecasting** for different time scales
-- **Variable selection networks** for feature importance
-- **Gating mechanisms** for improved gradient flow
-- **Interpretable attention** for model explainability
-
-### **Advanced Feature Engineering**
-```cpp
-// 40+ Technical Indicators
-- RSI, MACD, Bollinger Bands
-- VWAP, Order Flow Imbalance
-- Market Depth Ratios
-- Price Impact Metrics
-- Volatility Clustering
-- Regime Detection
-```
-
-### **Uncertainty Quantification**
-- **Monte Carlo Dropout** for epistemic uncertainty
-- **Confidence intervals** with configurable levels
-- **Model ensemble** predictions
-- **Calibrated probabilities** using temperature scaling
-
-## 📈 Supported Markets & Assets
-
-### **Exchanges**
-- ✅ **OKX** (Perpetual Futures, Spot)
-- ✅ **Binance** (Futures, Spot)  
-- ✅ **Coinbase** (Spot)
-- 🔄 **Bybit** (Coming Soon)
-
-### **Assets**
-- **Major Cryptocurrencies**: BTC, ETH, BNB, ADA, SOL
-- **Stablecoins**: USDT, USDC, BUSD
-- **DeFi Tokens**: UNI, AAVE, COMP
-- **Layer 1s**: AVAX, MATIC, DOT
-
-## 🔬 Research & Development
-
-### **Current Research Areas**
-- **Graph Neural Networks** for cross-asset correlations
-- **Reinforcement Learning** for adaptive execution
-- **Federated Learning** for privacy-preserving model updates
-- **Quantized Models** for edge deployment
-
-### **Academic Contributions**
-- Research paper on transformer applications in HFT (submitted to JFDS)
-- Open-source contributions to PyTorch financial modules
-- Collaboration with academic institutions on market microstructure
-
-## 🛡️ Risk Management
-
-### **Built-in Risk Controls**
-- **Position size limits** based on volatility
-- **Drawdown protection** mechanisms  
-- **Model confidence thresholds**
-- **Circuit breakers** for extreme market conditions
-
-### **Monitoring & Alerts**
-- **Real-time model performance** tracking
-- **GPU memory usage** monitoring
-- **Latency spike** detection
-- **Data quality** validation
-
-## 📚 Documentation
-
-- 📖 **[API Documentation](docs/api.md)** - Complete API reference
-- 🏗️ **[Architecture Guide](docs/architecture.md)** - System design details
-- 🧠 **[AI Model Guide](docs/ai_models.md)** - Model training and deployment
-- ⚡ **[GPU Optimization](docs/gpu_optimization.md)** - CUDA performance tuning
-- 📊 **[Trading Strategies](docs/strategies.md)** - Implementation examples
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### **Development Setup**
-```bash
-# Setup development environment
-./setup_gpu_dependencies.sh
-source setup_env.sh
-
-# Run tests with GPU validation  
-./test_gpu_capabilities.sh
-
-# Run benchmarks
-./benchmark_models.sh
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
-
-## 🏆 Awards & Recognition
-
-- 🥇 **Best Financial AI Project** - CppCon 2023
-- 🏅 **Top GPU Computing Application** - NVIDIA GTC 2023  
-- 📈 **Innovation in Quantitative Finance** - QuantMinds 2023
-
-## 📞 Contact & Support
-
-- 💬 **Discord**: [Join our community](https://discord.gg/trading-ai)
-- 📧 **Email**: support@trading-simulator.ai
-- 🐛 **Issues**: [GitHub Issues](https://github.com/Krrish2004/cryptocurrency-trade-simulator/issues)
-- 📖 **Wiki**: [Project Wiki](https://github.com/Krrish2004/cryptocurrency-trade-simulator/wiki)
+For the latest updates and releases, check the [Releases](https://github.com/DoryanGhitub/cryptocurrency-trade-simulator/releases) section. Here, you can download the latest version and see what's new.
 
 ---
 
-<div align="center">
-
-**🚀 Built with ❤️ for the future of algorithmic trading**
-
-*Empowering traders with GPU-accelerated AI*
-
-</div> 
+Thank you for your interest in the Cryptocurrency Trade Simulator! We hope this tool helps you in your trading endeavors and enhances your understanding of cryptocurrency markets. Happy trading!
